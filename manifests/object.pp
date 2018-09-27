@@ -103,7 +103,7 @@ define icinga2::object(
   $_attrs = merge($attrs, {
     'assign where' => $assign,
     'ignore where' => $ignore,
-  })
+  }).filter |$key, $val| { $val != "" and $val =~ NotUndef }
 
   $_content = $::osfamily ? {
     'windows' => regsubst(template('icinga2/object.conf.erb'), '\n', "\r\n", 'EMG'),
